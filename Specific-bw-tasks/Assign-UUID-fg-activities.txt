@@ -1,0 +1,4 @@
+Assign UUID to each foreground database activity and exchange
+
+
+https://www.uuidgenerator.net/
