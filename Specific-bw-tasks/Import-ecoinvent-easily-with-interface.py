@@ -34,4 +34,9 @@ bi.import_ecoinvent_release("3.10", "cutoff") # ask for the version
 Ecoinvent = bw.Database('ecoinvent-3.10-cutoff')
 
 
-# Note that both ecoinvent and biosphere get assigned a name, and the biosphere name has changed (not "biosphere3" as used previously)
+# see here for further documentation on the function: https://github.com/brightway-lca/brightway2-io/blob/main/bw2io/ecoinvent.py#L57
+
+# Note that both ecoinvent and biosphere get assigned a name, and the biosphere name has changed and it is not "biosphere3" as used previously. If you want to use biosphere3 for backwards compatibility then use: 
+
+# bi.import_ecoinvent_release("3.10", "cutoff", biosphere_name="biosphere3")
+ 
