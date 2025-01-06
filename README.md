@@ -16,7 +16,7 @@ Videos explaining the notebooks are available at [my blog](https://moutreach.sci
 
 Includes some of the same content as in the "Course-material" folder but using brightway version 2.5. 
 
-Tutorials on sensitivity and uncertainty analysis use a different approach than in the bw2 version (do not use parameters).
+Tutorials on sensitivity and uncertainty analysis use a different approach than in the bw2 version (do not use parameters). 
 
 
 ### Folder "Specific-bw-tasks"
