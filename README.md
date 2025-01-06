@@ -1,11 +1,11 @@
 # advanced-lca-notebooks
 
 
-### Folder "Course-Material"
+### Legacy folder "Course-Material"
 
-Notebooks used in the advanced LCA course (uses Brightway version 2.3 also called "legacy" or simply "brightway2")
+Notebooks used in the advanced LCA course (uses Brightway version 2.3 also called "legacy" or simply "brightway2"). These notebooks are not being updated anymore
 
-These notebooks introduce to the use of the [Brightway2](https://2.docs.brightway.dev/index.html) LCA software. They have been used in multiple editions of the "Advanced LCA" course at Aalborg University. More primitive versions are available at the [B4B](https://github.com/massimopizzol/B4B) repository.
+These notebooks introduce to the use of the [Brightway2](https://2.docs.brightway.dev/index.html) LCA software. They have been used in multiple editions of the "Advanced LCA" course at Aalborg University.
 
 Videos explaining the notebooks are available at [my blog](https://moutreach.science/2022/08/15/teaching-videos.html) together with other introductory LCA teaching videos.
 
@@ -14,10 +14,11 @@ Videos explaining the notebooks are available at [my blog](https://moutreach.sci
 
 ### Folder "Course-Material-bw25"
 
-Includes some of the same content as in the "Course-material" folder but using brightway version 2.5. 
+Includes some of the same content as in the "Course-material" folder but updated using brightway version 2.5. 
 
 Tutorials on sensitivity and uncertainty analysis use a different approach than in the bw2 version (do not use parameters). 
 
+This is the material currently used for teaching.
 
 ### Folder "Specific-bw-tasks"
 
@@ -29,4 +30,4 @@ Contains several various short notebooks to perform specific types of LCA analys
 
 Some of these notebooks are incomplete or under preparation (See under "work in progress")
 
-Most notebooks were written using bw2.3 version.
+Most notebooks were written using bw2.3 version, some are in bw2.5 version.
