@@ -7312,6 +7312,7 @@ a.anchor-link {
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -7528,6 +7529,7 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>When you do an LCA you need to access the various activities and look at them to understand what are their inputs and outputs and how they are linked to other activities. This script includes code to do this in different ways. Try it out and try it on your own product system as well.</p>
+<p>(For an extensive list of useful commands, see the online <a href="https://docs.brightway.dev/en/latest/content/cheatsheet/index.html">cheatsheet</a> guide)</p>
 </div>
 </div>
 </div>
@@ -7610,7 +7612,7 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>First we look into the information associated with a <strong>specific activity</strong>.
-This is how we select the activity (a DICT):</p>
+This is how we select the activity (which is a python dictionary):</p>
 </div>
 </div>
 </div>
@@ -7619,11 +7621,11 @@ This is how we select the activity (a DICT):</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">el</span> <span class="o">=</span> <span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Electricity production'</span><span class="p">)</span>  <span class="c1"># reads: "get the activity electricity production from t_db </span>
-                                         <span class="c1"># and associate it to a python object "el"</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">el</span> <span class="o">=</span> <span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Electricity production'</span><span class="p">)</span>  <span class="c1"># reads: "get the activity 'Electricity production' from the database instance 't_db'... </span>
+                                         <span class="c1"># ...and associate it to a python object 'el'"</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -7648,11 +7650,12 @@ This is how we select the activity (a DICT):</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">el</span><span class="p">:</span>  <span class="c1"># k for "key". These the possible keys of an activity dictionary</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="c1"># Note that there is a key called "id" that we didn't define in the previous notebook. More on this later.</span>
 </pre></div>
 </div>
 </div>
@@ -7670,6 +7673,7 @@ unit
 location
 database
 code
+type
 id
 </pre>
 </div>
@@ -7681,7 +7685,7 @@ id
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">el</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>  <span class="c1"># or just this (type '.' and then press 'tab')</span>
@@ -7695,14 +7699,15 @@ id
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{'name': 'Electricity production',
  'unit': 'kWh',
  'location': 'GLO',
  'database': 'testdb',
  'code': 'Electricity production',
- 'id': 4}</pre>
+ 'type': 'processwithreferenceproduct',
+ 'id': 134650284240445440}</pre>
 </div>
 </div>
 </div>
@@ -7712,7 +7717,7 @@ id
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">el</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>  <span class="c1"># print the value of one key</span>
@@ -7733,8 +7738,85 @@ id
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Electricity production
-Electricity production *** Electricity production *** kWh *** testdb *** 4
+Electricity production *** Electricity production *** kWh *** testdb *** 134650284240445440
 kWh
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>What is the "id" specifically?</strong>
+It is a unique identifier of each element in the techosphere/biosphere matrix, also called a "node".
+See documentation <a href="https://docs.brightway.dev/en/latest/content/overview/inventory.html">here</a>.
+In the case of technosphere matrix where we have pairs of activities wach with a respective product, with some simplification (it is not entirely correct) we can think of the "id" value as the unique identifier of each activity (product), in the sense that each activity (product) has a different id value. So it is an identifier of each column (row) of the matrix. Note that in this specific example the "id" has been assigned automatically to each activity of our product system.
+The same applies for the intervention matrix (biosphere exchanges).</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [60]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"the 'id' value for this activity is"</span><span class="p">,</span> <span class="n">el</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>the 'id' value for this activity is 134650284240445440
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [63]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Compare also</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'testdb'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Electricity production'</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'testdb'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Fuel production'</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="c1"># with</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'testbiosphere'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Carbon dioxide'</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="c1"># Also biosphere nodes have ids...these are the rows of the intervention matrix.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'testbiosphere'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Sulphur dioxide'</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>134650284240445440
+134650284240445441
+134650271489761280
+134650271489761281
 </pre>
 </div>
 </div>
@@ -7756,7 +7838,7 @@ kWh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#el['exchanges']  # this doesn't work.</span>
@@ -7772,7 +7854,7 @@ kWh
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>[Exchange: 2 liters 'Fuel production' (liters, GLO, None) to 'Electricity production' (kWh, GLO, None)&gt;,
  Exchange: 1 kg 'Carbon dioxide' (kg, None, None) to 'Electricity production' (kWh, GLO, None)&gt;,
@@ -7787,7 +7869,7 @@ kWh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">exc</span> <span class="ow">in</span> <span class="n">el</span><span class="o">.</span><span class="n">exchanges</span><span class="p">():</span>  <span class="c1"># or this, visualize all exchanges of an activity and specific attributes</span>
@@ -7859,7 +7941,7 @@ Electricity production
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">el_exc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">exchanges</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># "the first exchange of the el activity" (this is also a DICT)</span>
@@ -7887,7 +7969,7 @@ Electricity production
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">el</span><span class="p">))</span>  <span class="c1"># compare the three</span>
@@ -7918,7 +8000,7 @@ Electricity production
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">el_exc</span><span class="p">:</span>  <span class="c1"># the possible keys of an exchange (DICT iteration)</span>
@@ -7950,7 +8032,7 @@ output : ('testdb', 'Electricity production')
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">el_exc</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>  <span class="c1"># or just this, as above</span>
@@ -7964,7 +8046,7 @@ output : ('testdb', 'Electricity production')
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[45]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{'input': ('testdb', 'Fuel production'),
  'amount': 2,
@@ -7980,7 +8062,7 @@ output : ('testdb', 'Electricity production')
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">el_exc</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="c1"># another nice one</span>
@@ -7994,7 +8076,7 @@ output : ('testdb', 'Electricity production')
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[46]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>ItemsView(Exchange: 2 liters 'Fuel production' (liters, GLO, None) to 'Electricity production' (kWh, GLO, None)&gt;)</pre>
 </div>
@@ -8006,7 +8088,7 @@ output : ('testdb', 'Electricity production')
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">el_exc</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="n">el_exc</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">]</span>  <span class="c1"># equivalent ways, different from activities</span>
@@ -8020,7 +8102,7 @@ output : ('testdb', 'Electricity production')
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[47]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>True</pre>
 </div>
@@ -8032,7 +8114,56 @@ output : ('testdb', 'Electricity production')
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Note that exchanges do not have "id" </span>
+<span class="n">el_exc</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[49], line 2</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># Note that exchanges do not have "id" </span>
+<span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-yellow-bg">el_exc</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">id</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg">]</span>
+
+File <span class="ansi-green-fg">/opt/homebrew/Caskroom/miniconda/base/envs/brightway/lib/python3.11/site-packages/bw2data/proxies.py:33</span>, in <span class="ansi-cyan-fg">ProxyBase.__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">     32</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__getitem__</span>(<span style="color: rgb(0,135,0)">self</span>, key):
+<span class="ansi-green-fg">---&gt; 33</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_data</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg">]</span>
+
+<span class="ansi-red-fg">KeyError</span>: 'id'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>On the meaning of input and output, as this can be confusing:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">el_exc</span><span class="p">[</span><span class="s1">'amount'</span><span class="p">],</span> <span class="n">el_exc</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">],</span> <span class="n">el_exc</span><span class="p">[</span><span class="s1">'input'</span><span class="p">],</span> 
@@ -8062,20 +8193,6 @@ within
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -8083,7 +8200,7 @@ within
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The terms "input" and "output" are used to identify two coorinates in the technology matrix
+<p>The terms "input" and "output" are used to identify two coordinates in the technology matrix
 "input" corresponds to the row (product input) and "output" corresponds to the column (activity output).</p>
 <p>In the case below "the production of electricity requires fuel".</p>
 <p>Or, in other words, "to obtain an <strong>output</strong> of electricity one requires an <strong>input</strong> from fuel production"</p>
@@ -8096,7 +8213,7 @@ within
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [51]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">el_exc</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>  <span class="c1"># One can intended the word 'input' as "from'</span>
@@ -8136,7 +8253,7 @@ within
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [53]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">exc</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">exchanges</span><span class="p">()):</span>
@@ -8181,7 +8298,7 @@ Electricity production ...Not this one
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [54]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">exc</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">exchanges</span><span class="p">()):</span>
@@ -8212,7 +8329,7 @@ Electricity production ...Not this one
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [55]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">elCO2_amount</span> <span class="o">*</span> <span class="mf">1234.56</span>  <span class="c1"># it's a number and you can make operations with that</span>
@@ -8226,7 +8343,7 @@ Electricity production ...Not this one
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[55]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>1234.56</pre>
 </div>
