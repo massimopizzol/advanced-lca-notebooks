@@ -7312,6 +7312,7 @@ a.anchor-link {
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -7527,7 +7528,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The most important data structures of brightway are represented <a href="https://docs.brightway.dev/en/latest/_images/org-scheme.png">here</a> and described <a href="https://docs.brightway.dev/en/latest/">here</a>. Look at the figure  and try to make the parallel with what you know already (e.g. Simapro). I recommend that later you read carefully this documentation page. This is also the terminology to use when working with Brightway2.5.</p>
+<p>The most important data structures of brightway are represented <a href="https://docs.brightway.dev/en/latest/_images/org-scheme.png">here</a> and the inventory structure is described <a href="https://docs.brightway.dev/en/latest/content/overview/inventory.html">here</a>. Look at the figure  and try to make the parallel with what you know already (e.g. Simapro). I recommend that later you read carefully this documentation page. This is also the terminology to use when working with Brightway2.5.</p>
 </div>
 </div>
 </div>
@@ -7564,10 +7565,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span> <span class="c1"># bd.projects.output_dir to find out where projects are stored in the hd</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Choose a project (in this case create one) </span>
+<span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span> <span class="c1"># bd.projects.output_dir to find out where projects are stored in the hd</span>
 </pre></div>
 </div>
 </div>
@@ -7621,10 +7623,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">t_db</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"testdb"</span><span class="p">)</span> <span class="c1"># creates an instance of the database class # t_db.name for example.</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">t_db</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"testdb"</span><span class="p">)</span> <span class="c1"># creates an instance of the database class # Try doing t_db.name for example.</span>
 </pre></div>
 </div>
 </div>
@@ -7635,7 +7637,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># This is the most important cell in this notebook, read it carefully</span>
@@ -7709,13 +7711,13 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|███████████████████████████████████████████| 5/5 [00:00&lt;00:00, 2060.88it/s]</pre>
+<pre>100%|███████████████████████████████████████████| 5/5 [00:00&lt;00:00, 3443.60it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
+<pre>14:28:38 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
 </pre>
 </div>
 </div>
@@ -7733,7 +7735,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span> <span class="c1"># Now I see the database</span>
@@ -7747,59 +7749,11 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Databases dictionary with 1 object(s):
 	testdb</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Access one activity using the <code>.get</code> python method</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Electricity production"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>'Electricity production' (kWh, GLO, None)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now solve the inventory</p>
 </div>
 </div>
 </div>
@@ -7811,7 +7765,35 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">functional_unit</span> <span class="o">=</span> <span class="p">{</span><span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Electricity production"</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1000</span><span class="p">}</span> <span class="c1"># the selected activity</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Access one activity using the `.get` python method</span>
+<span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Electricity production"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>'Electricity production' (kWh, GLO, None)</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Now solve the inventory</span>
+<span class="n">functional_unit</span> <span class="o">=</span> <span class="p">{</span><span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Electricity production"</span><span class="p">)</span> <span class="p">:</span> <span class="mi">1000</span><span class="p">}</span> <span class="c1"># the selected activity</span>
 <span class="n">lca</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">LCA</span><span class="p">(</span><span class="n">functional_unit</span><span class="p">)</span>
 <span class="n">lca</span><span class="o">.</span><span class="n">lci</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lca</span><span class="o">.</span><span class="n">inventory</span><span class="p">)</span> <span class="c1"># Is this what you expected?</span>
@@ -7827,24 +7809,16 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>  (0, 1)	19.999999999999996
+<pre>&lt;Compressed Sparse Row sparse matrix of dtype 'float64'
+	with 5 stored elements and shape (3, 2)&gt;
+  Coords	Values
+  (0, 1)	20.0
   (0, 0)	100.0
-  (1, 1)	3.9999999999999996
+  (1, 1)	4.0
   (1, 0)	10.000000149011612
-  (2, 1)	-99.99999999999999
+  (2, 1)	-100.0
 </pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We can't do the LCIA because we have no characterisation factors yet. So we create a LCIA method.</p>
 </div>
 </div>
 </div>
@@ -7856,7 +7830,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">myLCIAdata</span> <span class="o">=</span> <span class="p">[[(</span><span class="s1">'testdb'</span><span class="p">,</span> <span class="s1">'Carbon dioxide'</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">],</span> 
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># We can't do the LCIA because we have no characterisation factors yet. So we create a LCIA method.</span>
+<span class="n">myLCIAdata</span> <span class="o">=</span> <span class="p">[[(</span><span class="s1">'testdb'</span><span class="p">,</span> <span class="s1">'Carbon dioxide'</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">],</span> 
               <span class="p">[(</span><span class="s1">'testdb'</span><span class="p">,</span> <span class="s1">'Sulphur dioxide'</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">],</span>
               <span class="p">[(</span><span class="s1">'testdb'</span><span class="p">,</span> <span class="s1">'Crude oil'</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">]]</span>
 
@@ -7878,9 +7853,9 @@ a.anchor-link {
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[[('testdb', 'Carbon dioxide'), 1.0],
- [('testdb', 'Sulphur dioxide'), 2.0],
- [('testdb', 'Crude oil'), 0.0]]</pre>
+<pre>[(134649399577845762, 1.0),
+ (134649399577845763, 2.0),
+ (134649399577845764, 0.0)]</pre>
 </div>
 </div>
 </div>
@@ -7893,7 +7868,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">lca</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">LCA</span><span class="p">(</span><span class="n">functional_unit</span><span class="p">,</span> <span class="n">method_key</span><span class="p">)</span> <span class="c1"># run LCA calculations again with method</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate LCIA results</span>
+<span class="n">lca</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">LCA</span><span class="p">(</span><span class="n">functional_unit</span><span class="p">,</span> <span class="n">method_key</span><span class="p">)</span> <span class="c1"># run LCA calculations again with method</span>
 <span class="n">lca</span><span class="o">.</span><span class="n">lci</span><span class="p">()</span>
 <span class="n">lca</span><span class="o">.</span><span class="n">lcia</span><span class="p">()</span> <span class="c1"># the LCIA step</span>
 <span class="n">lca</span><span class="o">.</span><span class="n">score</span>
@@ -7913,26 +7889,17 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>characterized_inventory
-   (0, 0)	100.0
-  (0, 1)	19.999999999999996
+ &lt;Compressed Sparse Row sparse matrix of dtype 'float64'
+	with 4 stored elements and shape (3, 2)&gt;
+  Coords	Values
+  (0, 0)	100.0
+  (0, 1)	20.0
   (1, 0)	20.000000298023224
-  (1, 1)	7.999999999999999
+  (1, 1)	8.0
 Score
  148.00000029802322
 </pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Why 'score'? The point with 'score' is that what in Brightway2 is called a "method" is in fact an "impact category"...
-So all characterised results of the method are correctly summed up.</p>
 </div>
 </div>
 </div>
@@ -7944,7 +7911,10 @@ So all characterised results of the method are correctly summed up.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Why 'score'? The point with 'score' is that what in Brightway2 is called a "method" is in fact an "impact category"...</span>
+<span class="c1"># So all characterised results of the method are correctly summed up.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lca</span><span class="o">.</span><span class="n">characterized_inventory</span><span class="p">)</span> <span class="o">==</span> <span class="n">lca</span><span class="o">.</span><span class="n">score</span>
 </pre></div>
 </div>
@@ -8048,13 +8018,13 @@ This time we create two databases, "testdb"  for product flows and 'testbiospher
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|██████████████████████████████████████████| 3/3 [00:00&lt;00:00, 10002.31it/s]</pre>
+<pre>100%|██████████████████████████████████████████| 3/3 [00:00&lt;00:00, 19210.55it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
+<pre>14:32:06 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
 </pre>
 </div>
 </div>
@@ -8142,13 +8112,13 @@ This time we create two databases, "testdb"  for product flows and 'testbiospher
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|██████████████████████████████████████████| 2/2 [00:00&lt;00:00, 10754.63it/s]</pre>
+<pre>100%|██████████████████████████████████████████| 2/2 [00:00&lt;00:00, 15621.24it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
+<pre>14:32:09 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
 </pre>
 </div>
 </div>
@@ -8220,9 +8190,9 @@ This time we create two databases, "testdb"  for product flows and 'testbiospher
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[20]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[[('testbiosphere', 'Carbon dioxide'), 1.0],
- [('testbiosphere', 'Sulphur dioxide'), 2.0],
- [('testbiosphere', 'Crude oil'), 0.0]]</pre>
+<pre>[(134650271489761280, 1.0),
+ (134650271489761281, 2.0),
+ (134650271489761282, 0.0)]</pre>
 </div>
 </div>
 </div>
@@ -8265,7 +8235,7 @@ This time we create two databases, "testdb"  for product flows and 'testbiospher
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Exercise-in-group">Exercise in group<a class="anchor-link" href="#Exercise-in-group">¶</a></h1>
+<h1 id="Exercise-in-group-(course-Module-2,-Session-1)">Exercise in group (course Module 2, Session 1)<a class="anchor-link" href="#Exercise-in-group-(course-Module-2,-Session-1)">¶</a></h1>
 </div>
 </div>
 </div>
@@ -8310,8 +8280,8 @@ This time we create two databases, "testdb"  for product flows and 'testbiospher
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="A-note-on-co-products">A note on co-products<a class="anchor-link" href="#A-note-on-co-products">¶</a></h1><p>There are at least two ways to model co-products with the substitution method. Besides the exchange types <code>‘technosphere’</code>, <code>‘biosphere’</code>, and <code>‘production’</code> there is a fourth type called <code>‘substitution’</code>. You can use that (use <strong>plus</strong> sign!). See the <a href="https://2.docs.brightway.dev/intro.html#exchanges">docs about exchanges</a>. Alternatively, you can simply create an exchange of the <code>‘technosphere’</code> type but using the <strong>minus</strong> sign. I.e. a negative input of some product. This is similar to e.g. SimaPro where there are two options: either use the predefined line for co-products or insert a negative input from technosphere.</p>
-<p>The signs issue is explained very clearly in the <a href="https://2.docs.brightway.dev/intro.html">introduction docs</a> under “Getting the signs right”. Note that this is perfectly consistent with the Hejiungs and Suh (2002) book chapter. Diagonal values in the A matrix are positive, off-diagonal inputs are negative. Intervention matrix signs depend on the convention (you decide the sign or you have to follow the convention used of the database, e.g. the database may assume that +10 kg CO2 means the emission of CO2 and +10 kg crude oil means the extraction of oil).</p>
+<h1 id="A-note-on-co-products">A note on co-products<a class="anchor-link" href="#A-note-on-co-products">¶</a></h1><p>There are at least two ways to model co-products with the substitution method. Besides the exchange types <code>‘technosphere’</code>, <code>‘biosphere’</code>, and <code>‘production’</code> there is a fourth type called <code>‘substitution’</code>. You can use that (use <strong>plus</strong> sign!). Alternatively, you can create an exchange of the <code>‘technosphere’</code> type but using the <strong>minus</strong> sign. I.e. a negative input of some product. This is similar to e.g. SimaPro where there are two options: either use the predefined line for co-products or insert a negative input from technosphere.</p>
+<p>Note that this sign convention is consistent with the Hejiungs and Suh (2002) book chapter. Diagonal values in the A matrix are positive, off-diagonal inputs are negative. Intervention matrix signs depend on the convention (you decide the sign or you have to follow the convention used of the database, e.g. the biosphere database may assume that +10 kg CO2 means the emission of CO2 and +10 kg crude oil means the extraction of oil).</p>
 <p>To use the <strong>partitioning method</strong> one needs to calculate the allocated values (by mass/energy/revenue etc) for each exchange before importing the data into Brightway2 (or write a code that does that automatically), just like in e.g. SimaPro.</p>
 </div>
 </div>
