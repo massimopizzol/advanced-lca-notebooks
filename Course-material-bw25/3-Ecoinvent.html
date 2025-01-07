@@ -7312,6 +7312,7 @@ a.anchor-link {
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -7527,7 +7528,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now that you know how to work with the foreground system, it's time to learn how to work with the background system. In particular it is useful to import and work with two databases: <em>biosphere3</em> that contains all the exchanges and impact assessment methods, and <em>ecoinvent</em>.</p>
+<p>Now that you know how to work with the foreground system, it's time to learn how to work with the background system. In particular it is useful to import and work with two databases: <em>biosphere</em> that contains all the exchanges and impact assessment methods, and <em>ecoinvent</em>.</p>
 </div>
 </div>
 </div>
@@ -7538,28 +7539,18 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Read-this-before-starting">Read this before starting<a class="anchor-link" href="#Read-this-before-starting">¶</a></h4><p>This tutorial shows an "old school" way of importing ecoinvent, to be used when you have the files on your hard disk.</p>
-<p>There is however an <a href="https://github.com/massimopizzol/advanced-lca-notebooks/blob/main/Specific-bw-tasks/Import-ecoinvent-easily-with-interface.py">updated way of doing it</a> that fetches automatically files etc., it works smoother. Requires credentials. Check the linked tutorial.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Importing-ecoinvent">Importing ecoinvent<a class="anchor-link" href="#Importing-ecoinvent">¶</a></h4><p>You need to get the ecoinvent files first, see steps below:</p>
-<ol>
-<li>Open the ecoinvent website and <a href="https://ecoquery.ecoinvent.org/3.10/cutoff/search">login</a> with your username and password.</li>
-<li>You should read somewhere: <em>To download LCI and LCIA cumulative matrices click here</em>. Click there.</li>
-<li>Select <em>ecoinvent 3.9.1</em></li>
-<li>Download the file <code>ecoinvent 3.9.1_consequential_ecoSpold02.7z</code> in a folder of yours. Make sure you remember the full path to this directory. E.g. I have downloaded the file in:
-<em>/Users/massimo/Documents/Databases/ecoinvent v3.9.1</em></li>
-<li>The file you have downloaded is a compressed archive of many files (like with winzip or winrar). Extract the files from the .7z archive, e.g. by double clicking it. If it does not work, install a software that can do that. E.g. for mac users you can either download <a href="https://theunarchiver.com/">theunarchiver</a> or, if you are using brew, just open terminal and do <code>brew install p7zip</code> and then from terminal find the folder and do <code>7z x 'ecoinvent 3.9.1_consequential_ecoSpold02.7z'</code> (here the <a href="https://wiki.archlinux.org/index.php/p7zip">p7zip instructions</a> in case).</li>
-<li>Now you an run the cells below. <strong>Make sure you change the line of code that specifies the directory</strong> by writing the directory on your computer where you have extracted the files. For example, I have extracted the files in a folder called "datasets". The path to this folder is: <em>/Users/massimo/Documents/Databases/ecoinvent v3.9.1/datasets</em> You will see this same line in the script and you need to change it with your directory.</li>
-</ol>
+<h4 id="Read-this-before-starting">Read this before starting<a class="anchor-link" href="#Read-this-before-starting">¶</a></h4><p>This tutorial shows current recommended way of importing ecoinvent.
+<strong>You need to have the ecoinvent credentials</strong> (username and password) to do this.
+Check also the <a href="https://docs.brightway.dev/en/latest/content/cheatsheet/importing.html">official docs</a>.</p>
+<p>Before you run this tutorial, please <strong>install</strong> <code>ecoinvent_interface</code>.</p>
+<ul>
+<li>Open your terminal / powershell where the notebook is running</li>
+<li>Close this notebook (Ctrl + C)</li>
+<li>Run <code>conda install ecoinvent_interface</code></li>
+<li>Reopen the notebook</li>
+</ul>
+<p>If everything worked fine you should have installed the ecoinvent interface in the same virtual environment where brightweay is installed.</p>
+<p>Some more info on the package <a href="https://github.com/brightway-lca/ecoinvent_interface">here</a>.</p>
 </div>
 </div>
 </div>
@@ -7568,13 +7559,30 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import brightway2.5 packages</span>
 <span class="kn">import</span> <span class="nn">bw2calc</span> <span class="k">as</span> <span class="nn">bc</span>
 <span class="kn">import</span> <span class="nn">bw2data</span> <span class="k">as</span> <span class="nn">bd</span>
 <span class="kn">import</span> <span class="nn">bw2io</span> <span class="k">as</span> <span class="nn">bi</span>
+<span class="kn">import</span> <span class="nn">ecoinvent_interface</span> <span class="c1"># this will only work if you installed the ecoinvent_interface package</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># first select the right project (do bd.projects to check what projects you have)</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span>
+<span class="c1"># bd.projects.delete_project('advlca25', delete_dir=True) # if you want a fresh start</span>
 </pre></div>
 </div>
 </div>
@@ -7585,51 +7593,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">projects</span> <span class="c1"># check what project you have </span>
-<span class="c1"># bd.projects.delete_project('advlca23', delete_dir=True) # if you want a fresh start</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Brightway2 projects manager with 49 objects, including:
-	ALIGNED
-	B4B18
-	BTC02
-	BTC_Att_LCA
-	Biowood
-	C3BO
-	CCU
-	ConseqUncertainty
-	GSA
-	Giovanni
-Use `sorted(projects)` to get full list, `projects.report()` to get
-	a report on all projects.</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span> <span class="c1"># Still working in the same project</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Which databases are present?</span>
 <span class="n">bd</span><span class="o">.</span><span class="n">databases</span>
-<span class="c1"># bd.databases.clear() # For a fresh start (Risky command! clears all your existing databases)</span>
 </pre></div>
 </div>
 </div>
@@ -7640,7 +7608,7 @@ Use `sorted(projects)` to get full list, `projects.report()` to get
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Databases dictionary with 2 object(s):
 	testbiosphere
@@ -7656,64 +7624,11 @@ Use `sorted(projects)` to get full list, `projects.report()` to get
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Before importing ecoinvent, we need to make a default setup of Brightway2. This means importing all the environmental exchanges and all the LCIA methods. Then when we import ecoinvent the ecoinvent activities will be linked to this database of environmental exchanges, just like in the previous example wiht the product system of H&amp;S 2002.</p>
+<p>We are going to use version 3.11 of ecoinvent, consequential model, for this course (it's the latest at the time of writing).</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import the biosphere3 database</span>
-<span class="n">bi</span><span class="o">.</span><span class="n">bw2setup</span><span class="p">()</span> <span class="c1"># This will take some time</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Creating default biosphere
-
-Applying strategy: normalize_units
-Applying strategy: drop_unspecified_subcategories
-Applying strategy: ensure_categories_are_tuples
-Applied 3 strategies in 0.00 seconds
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|████████████████████████████████████| 4709/4709 [00:00&lt;00:00, 15543.46it/s]
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
-Created database: biosphere3
-Creating default LCIA methods
-
-Wrote 762 LCIA methods with 227223 characterization factors
-Creating core data migrations
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7721,53 +7636,12 @@ Creating core data migrations
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># If you encounter the following error , uncomment the following code.</span>
-<span class="c1"># Error: "ValueError: Method ('CML v4.8 2016 no LT', 'acidification no LT', 'acidification (incl. fate, average Europe total, A&amp;B) no LT') already exists. Use ``overwrite=True`` to overwrite existing methods"</span>
-
-<span class="c1"># methods_to_delete = list(bd.methods)</span>
-<span class="c1"># for method in methods_to_delete:</span>
-<span class="c1">#     m = bd.Method(method)</span>
-<span class="c1">#     m.deregister()</span>
-<span class="c1"># del bd.databases["biosphere3"]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We are going to use version 3.9.1 of ecoinvent, consequential model, for this course.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import ecoinvent</span>
-
-<span class="c1"># You need to change the line below with the directory where you have saved ecoinvent</span>
-<span class="n">ei391dir</span> <span class="o">=</span> <span class="s2">"/Users/massimo/Documents/Databases/ecoinvent v3.9.1/ecoinvent 3.9.1_consequential_ecoSpold02/datasets"</span>
-<span class="c1">#ei391dir = "/Users/bp45th/Downloads/ecoinvent 3.9.1_consequential_ecoSpold02/datasets"</span>
-
-<span class="k">if</span> <span class="s1">'ecoinvent 3.9.1 conseq'</span> <span class="ow">in</span> <span class="n">bi</span><span class="o">.</span><span class="n">databases</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Database has already been imported"</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">ei391</span> <span class="o">=</span> <span class="n">bi</span><span class="o">.</span><span class="n">SingleOutputEcospold2Importer</span><span class="p">(</span><span class="n">ei391dir</span><span class="p">,</span> <span class="s1">'ecoinvent 3.9.1 conseq'</span><span class="p">)</span> <span class="c1"># You can give it another name of course</span>
-    <span class="n">ei391</span><span class="o">.</span><span class="n">apply_strategies</span><span class="p">()</span>
-    <span class="n">ei391</span><span class="o">.</span><span class="n">statistics</span><span class="p">()</span>
-
-<span class="c1">#ei391.drop_unlinked(True) # Use this line if you get an "unlinked exchanges" error</span>
-<span class="n">ei391</span><span class="o">.</span><span class="n">write_database</span><span class="p">()</span> <span class="c1"># This will take some time.</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">bi</span><span class="o">.</span><span class="n">import_ecoinvent_release</span><span class="p">(</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">'3.11'</span><span class="p">,</span>
+    <span class="n">system_model</span><span class="o">=</span><span class="s1">'consequential'</span><span class="p">,</span>
+    <span class="n">username</span> <span class="o">=</span><span class="s1">'XXX'</span><span class="p">,</span> <span class="c1"># use your own</span>
+    <span class="n">password</span><span class="o">=</span><span class="s1">'XXX'</span> <span class="c1"># use your own</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7780,8 +7654,50 @@ Creating core data migrations
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Extracting XML data from 18856 datasets
-Extracted 18856 datasets in 96.21 seconds
+<pre>Applying strategy: normalize_units
+Applying strategy: drop_unspecified_subcategories
+Applying strategy: ensure_categories_are_tuples
+Applied 3 strategies in 0.00 seconds
+Graph statistics for `ecoinvent-3.11-biosphere` importer:
+9795 graph nodes:
+	emission: 9428
+	natural resource: 347
+	inventory indicator: 15
+	economic: 5
+0 graph edges:
+0 edges to the following databases:
+0 unique unlinked edges (0 total):
+
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>100%|████████████████████████████████████| 9795/9795 [00:00&lt;00:00, 64626.32it/s]</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>09:20:04 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Created database: ecoinvent-3.11-biosphere
+Extracting XML data from 22241 datasets
+09:20:16 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Extracted 22241 datasets in 11.97 seconds</span>
 Applying strategy: normalize_units
 Applying strategy: update_ecoinvent_locations
 Applying strategy: remove_zero_amount_coproducts
@@ -7804,34 +7720,37 @@ Applying strategy: add_cpc_classification_from_single_reference_product
 Applying strategy: delete_none_synonyms
 Applying strategy: update_social_flows_in_older_consequential
 Applying strategy: set_lognormal_loc_value
-Applied 22 strategies in 5.37 seconds
-18856 datasets
-547208 exchanges
-0 unlinked exchanges
-  
-Not able to determine geocollections for all datasets. This database is not ready for regionalization.
+Applied 22 strategies in 3.42 seconds
+Graph statistics for `ecoinvent-3.11-consequential` importer:
+22241 graph nodes:
+	process: 22241
+697163 graph edges:
+	biosphere: 425853
+	technosphere: 249069
+	production: 22241
+697163 edges to the following databases:
+	ecoinvent-3.11-biosphere: 425853
+	ecoinvent-3.11-consequential: 271310
+0 unique unlinked edges (0 total):
+
+
+09:20:20 [<span class="ansi-yellow-intense-fg ansi-bold">warning  </span>] <span class="ansi-bold">Not able to determine geocollections for all datasets. This database is not ready for regionalization.</span>
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|████████████████████████████████████| 18856/18856 [00:27&lt;00:00, 689.33it/s]
+<pre>100%|███████████████████████████████████| 22241/22241 [00:17&lt;00:00, 1274.34it/s]
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
-Created database: ecoinvent 3.9.1 conseq
+<pre>09:20:38 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
+Created database: ecoinvent-3.11-consequential
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Brightway2 SQLiteBackend: ecoinvent 3.9.1 conseq</pre>
 </div>
 </div>
 </div>
@@ -7841,10 +7760,10 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span> <span class="c1"># you should now see both "biosphere3" and "ecoinvent 3.9.1 conseq"</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span> <span class="c1"># you should now see both biosphere and ecoinvent </span>
 </pre></div>
 </div>
 </div>
@@ -7855,11 +7774,11 @@ Created database: ecoinvent 3.9.1 conseq
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Databases dictionary with 4 object(s):
-	biosphere3
-	ecoinvent 3.9.1 conseq
+	ecoinvent-3.11-biosphere
+	ecoinvent-3.11-consequential
 	testbiosphere
 	testdb</pre>
 </div>
@@ -7873,7 +7792,7 @@ Created database: ecoinvent 3.9.1 conseq
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Navigate-biosphere3-and-ecoinvent">Navigate biosphere3 and ecoinvent<a class="anchor-link" href="#Navigate-biosphere3-and-ecoinvent">¶</a></h1>
+<h1 id="Navigate-biosphere-and-ecoinvent">Navigate biosphere and ecoinvent<a class="anchor-link" href="#Navigate-biosphere-and-ecoinvent">¶</a></h1>
 </div>
 </div>
 </div>
@@ -7894,11 +7813,11 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Search stuff in biosphere</span>
-<span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"biosphere3"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"carbon dioxide"</span><span class="p">)</span> <span class="c1"># there is more than one activity with this name. Only code is univocal.</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-biosphere"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"carbon dioxide"</span><span class="p">)</span> <span class="c1"># there is more than one activity with this name. Only code is univocal.</span>
 </pre></div>
 </div>
 </div>
@@ -7909,29 +7828,27 @@ Created database: ecoinvent 3.9.1 conseq
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>['Carbon dioxide, fossil' (kilogram, None, ('air', 'urban air close to ground')),
- 'Carbon dioxide, fossil' (kilogram, None, ('air', 'lower stratosphere + upper troposphere')),
- 'Carbon dioxide, fossil' (kilogram, None, ('air', 'low population density, long-term')),
- 'Carbon dioxide, fossil' (kilogram, None, ('air',)),
- 'Carbon dioxide, fossil' (kilogram, None, ('air', 'non-urban air or from high stacks')),
- 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'urban air close to ground')),
- 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'low population density, long-term')),
+<pre>['Carbon dioxide, fossil' (kilogram, None, ('air',)),
  'Carbon dioxide, non-fossil' (kilogram, None, ('air',)),
- 'Carbon dioxide, in air' (kilogram, None, ('natural resource', 'in air')),
- 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'non-urban air or from high stacks')),
- 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'lower stratosphere + upper troposphere')),
- 'Carbon dioxide, non-fossil, resource correction' (kilogram, None, ('natural resource', 'in air')),
- 'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil', 'forestry')),
  'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air',)),
  'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil',)),
- 'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil', 'agricultural')),
- 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'urban air close to ground')),
- 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'low population density, long-term')),
+ 'Carbon dioxide, in air' (kilogram, None, ('natural resource', 'in air')),
+ 'Carbon dioxide, fossil' (kilogram, None, ('air', 'lower stratosphere + upper troposphere')),
  'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil', 'industrial')),
- 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'non-urban air or from high stacks')),
- 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'lower stratosphere + upper troposphere'))]</pre>
+ 'Carbon dioxide, fossil' (kilogram, None, ('air', 'urban air close to ground')),
+ 'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil', 'forestry')),
+ 'Carbon dioxide, to soil or biomass stock' (kilogram, None, ('soil', 'agricultural')),
+ 'Carbon dioxide, fossil' (kilogram, None, ('air', 'low population density, long-term')),
+ 'Carbon dioxide, non-fossil, resource correction' (kilogram, None, ('natural resource', 'in air')),
+ 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'low population density, long-term')),
+ 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'urban air close to ground')),
+ 'Carbon dioxide, fossil' (kilogram, None, ('air', 'non-urban air or from high stacks')),
+ 'Carbon dioxide, non-fossil' (kilogram, None, ('air', 'non-urban air or from high stacks')),
+ 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'low population density, long-term')),
+ 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'urban air close to ground')),
+ 'Carbon dioxide, from soil or biomass stock' (kilogram, None, ('air', 'non-urban air or from high stacks'))]</pre>
 </div>
 </div>
 </div>
@@ -7941,11 +7858,12 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">CO2</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"biosphere3"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"349b29d1-3e58-4c66-98b9-9d1a076efd2e"</span><span class="p">)</span> <span class="c1"># This code works across bw2.5 installations, </span>
-                                                                    <span class="c1">### i.e. is univocal for biosphere3 everywhere</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">CO2</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-biosphere"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"349b29d1-3e58-4c66-98b9-9d1a076efd2e"</span><span class="p">)</span> 
+<span class="c1"># This code works across bw2.5 installations, </span>
+<span class="c1"># i.e. is univocal for biosphere3 everywhere</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">CO2</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span> <span class="c1"># there is more than one activity with this name. Only code is univocal.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">CO2</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
 </pre></div>
@@ -7972,17 +7890,16 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Search stuff in ecoinvent</span>
 
 <span class="c1"># Search by keyword</span>
-<span class="n">mydb</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'ecoinvent 3.9.1 conseq'</span><span class="p">)</span>
-<span class="c1">#mydb.search("*") # to search everything</span>
+<span class="n">mydb</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'ecoinvent-3.11-consequential'</span><span class="p">)</span>
 <span class="n">mydb</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"transport freight euro5"</span><span class="p">)</span>
 
-<span class="c1">#bd.Database('ecoinvent 3.9.1 conseq').search("transport") # gives the same result obviously</span>
+<span class="c1">#bd.Database('ecoinvent-3.11-consequential').search("transport freight euro5") # gives the same result obviously</span>
 </pre></div>
 </div>
 </div>
@@ -7993,33 +7910,33 @@ Created database: ecoinvent 3.9.1 conseq
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>['transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, BR, None),
- 'market for transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, RER, None),
- 'market for transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, BR, None),
- 'market for transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, RoW, None),
- 'transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, RER, None),
- 'transport, freight, lorry &gt;32 metric ton, EURO5' (ton kilometer, RoW, None),
- 'transport, freight, lorry 3.5-7.5 metric ton, EURO5' (ton kilometer, BR, None),
- 'transport, freight, lorry 7.5-16 metric ton, EURO5' (ton kilometer, BR, None),
- 'transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, BR, None),
- 'transport, freight, lorry, all sizes, EURO5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, BR, None),
- 'transport, freight, lorry, all sizes, EURO5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, RER, None),
- 'transport, freight, lorry, all sizes, EURO5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, RoW, None),
- 'market for transport, freight, lorry 7.5-16 metric ton, EURO5' (ton kilometer, RER, None),
- 'market for transport, freight, lorry 7.5-16 metric ton, EURO5' (ton kilometer, BR, None),
- 'market for transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, RER, None),
- 'market for transport, freight, lorry 7.5-16 metric ton, EURO5' (ton kilometer, RoW, None),
- 'market for transport, freight, lorry 3.5-7.5 metric ton, EURO5' (ton kilometer, RER, None),
- 'market for transport, freight, lorry 3.5-7.5 metric ton, EURO5' (ton kilometer, RoW, None),
- 'market for transport, freight, lorry 3.5-7.5 metric ton, EURO5' (ton kilometer, BR, None),
- 'market for transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, BR, None),
- 'market for transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, RoW, None),
- 'transport, freight, lorry 3.5-7.5 metric ton, EURO5' (ton kilometer, RER, None),
- 'transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, RER, None),
- 'transport, freight, lorry 7.5-16 metric ton, EURO5' (ton kilometer, RER, None),
- 'transport, freight, lorry 16-32 metric ton, EURO5' (ton kilometer, RoW, None)]</pre>
+<pre>['transport, freight, lorry, all sizes, EURO 5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, BR, None),
+ 'transport, freight, lorry, all sizes, EURO 5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, RER, None),
+ 'transport, freight, lorry, all sizes, EURO 5 to generic market for transport, freight, lorry, unspecified' (ton kilometer, RoW, None),
+ 'transport, freight, small lorry with refrigeration machine, EURO 5, R134a refrigerant, cooling to generic market' (ton kilometer, GLO, None),
+ 'transport, freight, small lorry with refrigeration machine, EURO 5, R134a refrigerant, freezing to generic market' (ton kilometer, GLO, None),
+ 'transport, freight, small lorry with refrigeration machine, EURO 5, CO2 refrigerant, cooling to generic market' (ton kilometer, GLO, None),
+ 'transport, freight, small lorry with refrigeration machine, EURO 5, CO2 refrigerant, freezing to generic market' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 7.5-16 ton, diesel, EURO 5, R134a refrigerant, freezing' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 7.5-16 ton, diesel, EURO 5, R134a refrigerant, cooling' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 3.5-7.5 ton, diesel, EURO 5, R134a refrigerant, cooling' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with ref. machine, 3.5-7.5 ton, diesel, EURO 5, R134a refrigerant, freezing' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 7.5-16 ton, diesel, EURO 5, CO2, liq. ref., cooling' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 7.5-16 ton, diesel, EURO 5, CO2, liq. ref., freezing' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 3.5-7.5 ton, diesel, EURO 5, CO2, liq. ref., freezing' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry with refrigeration machine, 3.5-7.5 ton, diesel, EURO 5, CO2, liq. ref., cooling' (ton kilometer, GLO, None),
+ 'market for transport, freight, lorry, &gt;32 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'transport, freight, lorry, 16-32 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'market for transport, freight, lorry, 16-32 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'transport, freight, lorry, 7.5-16 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'market for transport, freight, lorry, &gt;32 metric ton, diesel, EURO 5' (ton kilometer, RoW, None),
+ 'market for transport, freight, lorry, 7.5-16 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'market for transport, freight, lorry, 16-32 metric ton, diesel, EURO 5' (ton kilometer, RoW, None),
+ 'market for transport, freight, lorry, &gt;32 metric ton, diesel, EURO 5' (ton kilometer, RER, None),
+ 'transport, freight, lorry, 3.5-7.5 metric ton, diesel, EURO 5' (ton kilometer, BR, None),
+ 'market for transport, freight, lorry, 16-32 metric ton, diesel, EURO 5' (ton kilometer, RER, None)]</pre>
 </div>
 </div>
 </div>
@@ -8029,15 +7946,14 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [69]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># explore activities</span>
-
-<span class="n">activity_name</span> <span class="o">=</span> <span class="s1">'electricity'</span>
+<span class="n">activity_name</span> <span class="o">=</span> <span class="s1">'electricity denmark wind'</span>
 
 <span class="c1"># Same but different:</span>
-<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">activity_name</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>  
+<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">activity_name</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>  
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
@@ -8053,21 +7969,21 @@ Created database: ecoinvent 3.9.1 conseq
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>'electricity production, oil' (kilowatt hour, CO, None)
-c75f78213b09d028d43b259f776bc86d
-6912
-'electricity production, oil' (kilowatt hour, US-WECC, None)
-ee9f91e5c13b3ee8a73237d9864cbe18
-10580
-'electricity production, oil' (kilowatt hour, CN-FJ, None)
-a78cb6a46466fd367d1d974d5281e8d0
-5484
-'electricity production, oil' (kilowatt hour, CN-GZ, None)
-4ab58c28574b3f858a8a8568a39d28f5
-16983
-'electricity production, oil' (kilowatt hour, CN-GX, None)
-746dfaa2dd5693ec139b8a558b082095
-10501
+<pre>'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)
+4b61f97a9b942ba05720a1cea09eacc9
+134934203972096004
+'electricity production, wind, 1-3MW turbine, onshore' (kilowatt hour, DK, None)
+8c80ebe7a3f43b431accfeb24edb405a
+134934222171181058
+'electricity production, wind, &gt;3MW turbine, onshore' (kilowatt hour, DK, None)
+434762cedc4defea333e38bb6e6be112
+134934263594127367
+'electricity production, wind, &lt;1MW turbine, onshore' (kilowatt hour, DK, None)
+622628fc47fa1090caa557e8cf10f8f7
+134934240772919299
+'wind turbine network connection construction, 2MW, onshore' (unit, RoW, None)
+135c8dd8c1983aee7c05410e00f9c46a
+134934216122994690
 </pre>
 </div>
 </div>
@@ -8080,7 +7996,7 @@ a78cb6a46466fd367d1d974d5281e8d0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Note:-difference-between-'code'-and-'id'-(introduced-in-bw25)">Note: difference between 'code' and 'id' (introduced in bw25)<a class="anchor-link" href="#Note:-difference-between-'code'-and-'id'-(introduced-in-bw25)">¶</a></h4><p>In bw2.5 there is a new field, the "id" field. This is also an unique identifier of each exchange, but it's an integer not a string. Specifically, the "id" is basically a coordinate, it is the row/(column number of this exchange in the technology matrix (or in the biosphere matrix if a biosphere excahange).</p>
+<h4 id="Again-on-difference-between-'code'-and-'id'-(introduced-in-bw25)">Again on difference between 'code' and 'id' (introduced in bw25)<a class="anchor-link" href="#Again-on-difference-between-'code'-and-'id'-(introduced-in-bw25)">¶</a></h4><p>In bw2.5 there is a new field, the "id" field. This is also an unique identifier of each exchange, but it's an integer not a string. Specifically, the "id" could be intended as a coordinate, it is the row/(column number of this exchange in the technology matrix (or in the biosphere matrix if a biosphere excahange).</p>
 <p>Careful that (but I am not sure) differently from the 'code' the 'id' might not be univocal across bw installations!</p>
 </div>
 </div>
@@ -8090,10 +8006,11 @@ a78cb6a46466fd367d1d974d5281e8d0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">act</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'c75f78213b09d028d43b259f776bc86d'</span><span class="p">)</span> 
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">act</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'electricity denmark wind'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># take the firt activity of the list</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">act</span><span class="p">[</span><span class="s1">'code'</span><span class="p">]))</span> <span class="c1"># the code is a string</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">act</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]))</span> <span class="c1"># the id is an integer</span>
 </pre></div>
@@ -8108,7 +8025,8 @@ a78cb6a46466fd367d1d974d5281e8d0
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>&lt;class 'str'&gt;
+<pre>electricity production, wind, 1-3MW turbine, offshore
+&lt;class 'str'&gt;
 &lt;class 'int'&gt;
 </pre>
 </div>
@@ -8120,11 +8038,11 @@ a78cb6a46466fd367d1d974d5281e8d0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [70]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Try this        </span>
-<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"biosphere3"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'heat production'</span><span class="p">):</span>  
+<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"biosphere"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'heat production'</span><span class="p">):</span>  
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span> <span class="c1"># Can you explain this result?</span>
 </pre></div>
@@ -8137,11 +8055,11 @@ a78cb6a46466fd367d1d974d5281e8d0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [71]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># you can be much more specific in your search:</span>
-<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">activity_name</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"location"</span> <span class="p">:</span> <span class="s1">'DK'</span><span class="p">},</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">activity_name</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"location"</span> <span class="p">:</span> <span class="s1">'DK'</span><span class="p">},</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
@@ -8157,22 +8075,21 @@ a78cb6a46466fd367d1d974d5281e8d0
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Excluding 3525 filtered results
-'electricity production, oil' (kilowatt hour, DK, None)
-2d247f0b80d8af196724430602b0d86d
-19163
-'market for electricity, low voltage' (kilowatt hour, DK, None)
-ce40dd006e462e720eb669efbc31dd59
-7794
-'market for electricity, high voltage' (kilowatt hour, DK, None)
-1b3abeab9ce01846ca43ab75f0fbfbf7
-16179
-'market for electricity, medium voltage' (kilowatt hour, DK, None)
-f4dc7d2b1d70e6c0f929ec5231c085e0
-11216
-'electricity, high voltage, import from NO' (kilowatt hour, DK, None)
-23185c39f5391a0c31290b0cf8c41e6d
-20811
+<pre>'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)
+4b61f97a9b942ba05720a1cea09eacc9
+134934203972096004
+'electricity production, wind, 1-3MW turbine, onshore' (kilowatt hour, DK, None)
+8c80ebe7a3f43b431accfeb24edb405a
+134934222171181058
+'electricity production, wind, &gt;3MW turbine, onshore' (kilowatt hour, DK, None)
+434762cedc4defea333e38bb6e6be112
+134934263594127367
+'electricity production, wind, &lt;1MW turbine, onshore' (kilowatt hour, DK, None)
+622628fc47fa1090caa557e8cf10f8f7
+134934240772919299
+'wind turbine network connection construction, 2MW, onshore' (unit, RoW, None)
+135c8dd8c1983aee7c05410e00f9c46a
+134934216122994690
 </pre>
 </div>
 </div>
@@ -8194,13 +8111,13 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># If you know the code (e.g. found with method above) it's simple.        </span>
-<span class="n">mycode</span> <span class="o">=</span> <span class="s1">'ce40dd006e462e720eb669efbc31dd59'</span>
-<span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mycode</span><span class="p">)</span>
-<span class="c1">#myact = Database("biosphere3").get(mycode)  # Not working of course...</span>
+<span class="n">mycode</span> <span class="o">=</span> <span class="s1">'4b61f97a9b942ba05720a1cea09eacc9'</span>
+<span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mycode</span><span class="p">)</span>
+<span class="c1">#myact = Database("biosphere").get(mycode)  # Not working of course...</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">myact</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
 </pre></div>
@@ -8215,7 +8132,7 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>market for electricity, low voltage
+<pre>electricity production, wind, 1-3MW turbine, offshore
 </pre>
 </div>
 </div>
@@ -8226,7 +8143,7 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [73]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span><span class="o">.</span><span class="n">id</span> <span class="c1"># access the id directly</span>
@@ -8240,9 +8157,9 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[73]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[37]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>7794</pre>
+<pre>134934203972096004</pre>
 </div>
 </div>
 </div>
@@ -8252,10 +8169,10 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [74]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span><span class="o">.</span><span class="n">code</span> <span class="c1"># this won't work though. It's only for excahnges (see further below)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span><span class="o">.</span><span class="n">code</span> <span class="c1"># this won't work though. It's only for exchanges (see further below)</span>
 </pre></div>
 </div>
 </div>
@@ -8271,8 +8188,8 @@ f4dc7d2b1d70e6c0f929ec5231c085e0
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[74], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">myact</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">code</span> <span style="color: rgb(95,135,135)"># this won't work though. It's only for excahnges (see further below)</span>
+Cell <span class="ansi-green-fg">In[39], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">myact</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">code</span> <span style="color: rgb(95,135,135)"># this won't work though. It's only for exchanges (see further below)</span>
 
 <span class="ansi-red-fg">AttributeError</span>: 'Activity' object has no attribute 'code'</pre>
 </div>
@@ -8284,7 +8201,7 @@ Cell <span class="ansi-green-fg">In[74], line 1</span>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [75]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span><span class="o">.</span><span class="n">_data</span> <span class="c1"># a lot of detail</span>
@@ -8298,31 +8215,75 @@ Cell <span class="ansi-green-fg">In[74], line 1</span>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[75]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[40]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'comment': "This is a market activity. Each market represents the consumption mix of a product in a given geography, connecting suppliers with consumers of the same product in the same geographical area. Markets group the producers and also the imports of the product (if relevant) within the same geographical area. They also account for transport to the consumer and for the losses during that process, when relevant.\nThis dataset describes the electricity available on the high voltage level in Denmark. This is done by showing the transmission of 1kWh electricity at high voltage.\nTechnology:  Average technology used to transmit and distribute electricity. Includes underground and overhead lines, as well as air-, vacuum- and SF6-insulated high-to-medium voltage switching stations. Electricity production according to related technology datasets.\nTime period:  The 'Start of Period' and 'End of Period' do not refer to the year for which this market is valid. See general comment for the year for which the shares are based on.",
- 'classifications': [('EcoSpold01Categories', 'electricity/supply mix'),
-  ('ISIC rev.4 ecoinvent',
+<pre>{'comment': 'This dataset represents the production of high voltage electricity at offshore grid-connected wind power plants in Denmark in 2012. It includes operation and maintenance expenditures as well as infrastructure inputs. Wind load hours have been adapted to local conditions (see parameters).\nAt the moment, the offshore wind turbines are approximated with a 2MW wind turbine.\nAccording to The Wind Power Database (2014), total installed wind capacity on-and offshore in Denmark in the end of 2014 amounted to 5323.882 MW. Out of it, 22.2% were installed offshore, which are modelled with a 2 MW wind turbine. Percentages of the three onshore wind power plant classes modelled in ecoinvent referring to the total installed capacity (1313 windfarms by 12/2014): &lt;1MW 40.4%; 1-3MW 27.6%; &gt;3MW 9.8%  [Retreived from The Wind Power. 2014. Wind power and wind farms database. www.thewindpower.net, Status December 2014].\n[This dataset is meant to replace the following datasets:]\nIncluded activities start:  From operation of the wind power plant to high voltage electricity at the plant. According to (European Communities 2001), electricity produced with wind turbines in a wind power plant is connected to medium voltage or high voltage systems, depending on the size of the windfarm. Normally, each wind turbine contains a transformer from low voltage to medium voltage. The network connection additionally transforms the electricity to high voltage electricity. It is assumed here, that there are no stand-alone grid-connected small wind turbines and that all electricity is connected to the network in form of high voltage electricity. \n\nSource:\nEuropean Communities. 2001. Wind Turbine Grid Connection and Interaction. Deutsches Windenergie-Institut /Tech-wise A/S /DM Energy, p. 7 Tab.2.1\nIncluded activities end:  This activitiy ends with 1 kWh of produced electricity at the power plant. The dataset includes lubricating oil from maintenance of the installation. The dataset doesn"t include the land use as shipping is assumed to be restricted to a small extent.\nTechnology:  Technical details of the modeled 2 MW offshore wind power plant\nReferences:\nStiesdal H. (2001) Middelgrunden Offshore. A newsletter for customers and business associates, Bonus energy A/S. General technical description, Technical specification, Drawings and design, Bonus 2 MW offshore. Isager/Bogtryt/Offset, Svendborg, Denmark. www.bonus.dk\nImage: https://db3.ecoinvent.org/images/41626d58-4023-4151-b834-da0d7f2a51cc\nTime period:  The production volume of this activity in linked system models is back-calculated from the production volume of the electricity market this activity supplies. For the according year of reference consult the supplied electricity market. In the undefined database it is set to 0.',
+ 'classifications': [('ISIC rev.4 ecoinvent',
    '3510:Electric power generation, transmission and distribution'),
-  ('CPC', '17100: Electrical energy')],
- 'activity type': 'market activity',
- 'activity': '4d0a8fcb-4f55-5d1f-8a65-6d024b920b38',
- 'database': 'ecoinvent 3.9.1 conseq',
- 'filename': '4d0a8fcb-4f55-5d1f-8a65-6d024b920b38_d69294d7-8d64-4915-a896-9996a014c410.spold',
+  ('CPC', '1')],
+ 'activity type': 'ordinary transforming activity',
+ 'activity': '0755599b-18a9-5f62-9645-035b513879d6',
+ 'database': 'ecoinvent-3.11-consequential',
+ 'filename': '0755599b-18a9-5f62-9645-035b513879d6_66c93e71-f32b-4591-901c-55395db5c132.spold',
  'location': 'DK',
- 'name': 'market for electricity, low voltage',
+ 'name': 'electricity production, wind, 1-3MW turbine, offshore',
  'synonyms': [],
- 'parameters': [],
+ 'parameters': [{'description': 'Percentage of onshore wind power plant class capacity on total',
+   'id': '48483cc6-a1bd-4a2e-b3ae-fad67c561ca4',
+   'unit': 'dimensionless',
+   'comment': 'Literature value/calculated value. Percentage of installed capacity with onshore wind turbines &lt; 1MW on total installed wind capacity installed in this geography (see general comment for percentages in other size classes). \nSource: \n The Wind Power. 2014. Windpower and wind farms database. www.thewindpower.net, Status December 2014\nPercentage of the wind power plant class energy production on total wind power production in a country. Classes: &lt;1MW, 1-3MW, &gt;3MW. Values for onshore wind power plants.',
+   'amount': 0.221558253921,
+   'pedigree': {'reliability': 3,
+    'completeness': 2,
+    'temporal correlation': 1,
+    'geographical correlation': 1,
+    'further technological correlation': 2},
+   'uncertainty type': 2,
+   'loc': -1.5071,
+   'scale': 0.0608276253029822,
+   'scale without pedigree': 0.03162277660168379,
+   'name': 'percentage_class_onshore'},
+  {'description': 'gross electricity production',
+   'id': '8ce7c260-eef4-467b-833a-7754240d2626',
+   'unit': 'kilowatt hour',
+   'comment': 'Literature value/statistics. Gross electricity production 2012 with wind power. For all OECD countries, the OECD iLibrary 2014 provides data on electricity production with wind power plants (gross values 2012). \nFor all non-OECD countries and the world, this value is given in the Energy Statistics of non-OECD countries. \n\nOECD. 2014. IEA Electricity Information Statistics: OECD - Electricity and heat generation. OECD iLibrary. Online database. DOI : 10.1787/elect-data-en \n IEA/OECD. 2014. Energy statistics of non-OECD countries 2014. International Energy Agency (IEA), Paris Cedex (FR). \nnan',
+   'amount': 10270000000.0,
+   'pedigree': {'reliability': 2,
+    'completeness': 1,
+    'temporal correlation': 1,
+    'geographical correlation': 1,
+    'further technological correlation': 2},
+   'uncertainty type': 2,
+   'loc': 23.0525,
+   'scale': 0.042426406871192854,
+   'scale without pedigree': 0.02449489742783178,
+   'name': 'gross_electricity'},
+  {'description': 'losses from gross electricity production',
+   'id': '22325219-5239-4f09-a250-5b20c7fe50d2',
+   'unit': 'dimensionless',
+   'comment': 'Estimation. The factor for the loss of electricity from gross to net electricity production is an assumption based on experiences, statistics and expertise (1% losses for wind).\nnan',
+   'amount': 0.01,
+   'pedigree': {'reliability': 3,
+    'completeness': 3,
+    'temporal correlation': 1,
+    'geographical correlation': 3,
+    'further technological correlation': 3},
+   'uncertainty type': 2,
+   'loc': -4.6052,
+   'scale': 0.1063014581273465,
+   'scale without pedigree': 0.02449489742783178,
+   'name': 'losses_gross_net'}],
  'authors': {'data entry': {'name': 'Karin Treyer',
    'email': 'karin.treyer@psi.ch'},
   'data generator': {'name': 'Karin Treyer', 'email': 'karin.treyer@psi.ch'}},
- 'type': 'process',
- 'reference product': 'electricity, low voltage',
- 'flow': 'd69294d7-8d64-4915-a896-9996a014c410',
+ 'type': 'processwithreferenceproduct',
+ 'product_information': 'This product represents electrical energy measured in kWh. If electricity is taken from a market for electricity, the transmission infrastructure, country-specific losses and transformation losses (for markets for medium and low voltage) are included. Covers voltages above 24 kV.',
+ 'reference product': 'electricity, high voltage',
+ 'flow': '66c93e71-f32b-4591-901c-55395db5c132',
  'unit': 'kilowatt hour',
  'production amount': 1.0,
- 'code': 'ce40dd006e462e720eb669efbc31dd59',
- 'id': 7794}</pre>
+ 'code': '4b61f97a9b942ba05720a1cea09eacc9',
+ 'id': 134934203972096004}</pre>
 </div>
 </div>
 </div>
@@ -8332,7 +8293,7 @@ Cell <span class="ansi-green-fg">In[74], line 1</span>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [78]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check the exchanges in one activity</span>
@@ -8354,32 +8315,28 @@ Cell <span class="ansi-green-fg">In[74], line 1</span>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>production
-Exchange: 1.0 kilowatt hour 'market for electricity, low voltage' (kilowatt hour, DK, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', 'ce40dd006e462e720eb669efbc31dd59')
+Exchange: 1.0 kilowatt hour 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-consequential', '4b61f97a9b942ba05720a1cea09eacc9')
 -------
 technosphere
-Exchange: 8.74048809653223e-08 kilometer 'market for distribution network, electricity, low voltage' (kilometer, GLO, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', 'a0292b0328a3b02bc80b97b87f293152')
+Exchange: 5.75e-05 kilogram 'market for lubricating oil' (kilogram, RER, None) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-consequential', 'e35ae10287830b36a966be2e722cb114')
 -------
 technosphere
-Exchange: 0.0229 kilowatt hour 'market for electricity, low voltage' (kilowatt hour, DK, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', 'ce40dd006e462e720eb669efbc31dd59')
+Exchange: -5.75e-05 kilogram 'market for waste mineral oil' (kilogram, Europe without Switzerland, None) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-consequential', '97c70e8f9232f0c48538159539673137')
 -------
 technosphere
-Exchange: 7.36096869893038e-05 kilowatt hour 'electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted' (kilowatt hour, DK, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', '07e17e6e7a324a5d33024dd86ea17a05')
+Exchange: 9.5e-09 unit 'market for wind power plant, 2MW, offshore, fixed parts' (unit, GLO, None) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-consequential', 'a4b3225fc904b4ac0e6d0995e93d41e5')
 -------
 technosphere
-Exchange: 0.999926390313011 kilowatt hour 'electricity voltage transformation from medium to low voltage' (kilowatt hour, DK, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', '43278c4a64b05fa664897125971c02cc')
--------
-technosphere
-Exchange: 6.27e-09 kilogram 'market for sulfur hexafluoride, liquid' (kilogram, RER, None) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('ecoinvent 3.9.1 conseq', 'd5f80ee8a477ef1a64cd77e68eb02f2c')
+Exchange: 9.5e-09 unit 'market for wind power plant, 2MW, offshore, moving parts' (unit, GLO, None) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-consequential', 'e7f6e3eeff6c051d3e2aba88dc58c4b4')
 -------
 biosphere
-Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 'market for electricity, low voltage' (kilowatt hour, DK, None)&gt;
-('biosphere3', '35d1dff5-b535-4628-9826-4a8fce08a1f2')
+Exchange: 3.87 megajoule 'Energy, kinetic (in wind), converted' (megajoule, None, ('natural resource', 'in air')) to 'electricity production, wind, 1-3MW turbine, offshore' (kilowatt hour, DK, None)&gt;
+('ecoinvent-3.11-biosphere', '57c71b25-4663-4fad-9167-7ce5be3e8268')
 -------
 </pre>
 </div>
@@ -8391,15 +8348,15 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [79]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># If you know the name of the activity and want to select it:</span>
 <span class="n">activity_name</span> <span class="o">=</span> <span class="s1">'market for electricity, low voltage'</span>
     
-<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">):</span>  <span class="c1"># can you find an easier way? I couldn't</span>
+<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">):</span>  <span class="c1"># can you find an easier way? I couldn't</span>
     <span class="k">if</span> <span class="n">activity</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">==</span> <span class="n">activity_name</span><span class="p">:</span>
-        <span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
+        <span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
 
 <span class="n">myact</span>  <span class="c1"># Careful! Might not return the danish market. Not what I wanted! </span>
 </pre></div>
@@ -8412,9 +8369,9 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[79]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[42]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>'market for electricity, low voltage' (kilowatt hour, ZA, None)</pre>
+<pre>'market for electricity, low voltage' (kilowatt hour, PA, None)</pre>
 </div>
 </div>
 </div>
@@ -8424,13 +8381,13 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [81]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># A more specific search</span>
-<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">):</span>  
+<span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">):</span>  
     <span class="k">if</span> <span class="n">activity</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">==</span> <span class="n">activity_name</span> <span class="ow">and</span> <span class="n">activity</span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"DK"</span><span class="p">:</span>  <span class="c1"># need to be specific...</span>
-        <span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
+        <span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span>
 <span class="n">myact</span>  <span class="c1"># alright</span>
 </pre></div>
 </div>
@@ -8442,9 +8399,47 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[81]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[43]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>'market for electricity, low voltage' (kilowatt hour, DK, None)</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [53]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># selecting multiple acitivites with same criteria (very useful!)</span>
+<span class="c1"># we use list comprehension</span>
+<span class="n">acts</span> <span class="o">=</span> <span class="p">[</span><span class="n">act</span> <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span> <span class="k">if</span> <span class="n">act</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'market for electricity, low voltage'</span><span class="p">]</span>
+<span class="n">acts</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[53]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>['market for electricity, low voltage' (kilowatt hour, UZ, None),
+ 'market for electricity, low voltage' (kilowatt hour, CL, None),
+ 'market for electricity, low voltage' (kilowatt hour, ZW, None),
+ 'market for electricity, low voltage' (kilowatt hour, TM, None),
+ 'market for electricity, low voltage' (kilowatt hour, KR, None),
+ 'market for electricity, low voltage' (kilowatt hour, IN-Northern grid, None),
+ 'market for electricity, low voltage' (kilowatt hour, US-HICC, None),
+ 'market for electricity, low voltage' (kilowatt hour, PL, None),
+ 'market for electricity, low voltage' (kilowatt hour, CA-QC, None),
+ 'market for electricity, low voltage' (kilowatt hour, BR-South-eastern/Mid-western grid, None)]</pre>
 </div>
 </div>
 </div>
@@ -8454,7 +8449,7 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [82]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [54]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Explore exchanges</span>
@@ -8469,7 +8464,7 @@ Exchange: 6.27e-09 kilogram 'Sulfur hexafluoride' (kilogram, None, ('air',)) to 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [55]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># All the metadata of an exchange </span>
@@ -8515,7 +8510,7 @@ output
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [85]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [56]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># access exchange metadata</span>
@@ -8532,7 +8527,7 @@ output
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>technosphere ('ecoinvent 3.9.1 conseq', 'ce40dd006e462e720eb669efbc31dd59') ('ecoinvent 3.9.1 conseq', 'a0292b0328a3b02bc80b97b87f293152')
+<pre>technosphere ('ecoinvent-3.11-consequential', '08e4db2f36e3fb94aa3faede6aaaef7c') ('ecoinvent-3.11-consequential', '90d497641494893a5b9c623f6e2f3721')
 </pre>
 </div>
 </div>
@@ -8543,7 +8538,7 @@ output
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [86]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [57]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># again exchange metadata</span>
@@ -8573,7 +8568,7 @@ output
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Calculate-with-biosphere3-and-ecoinvent">Calculate with biosphere3 and ecoinvent<a class="anchor-link" href="#Calculate-with-biosphere3-and-ecoinvent">¶</a></h1><p>Ok now we can run an LCA with a dataset from ecoinvent.</p>
+<h1 id="Calculate-with-biosphere-and-ecoinvent">Calculate with biosphere and ecoinvent<a class="anchor-link" href="#Calculate-with-biosphere-and-ecoinvent">¶</a></h1><p>Now we can run an LCA with a dataset from ecoinvent.</p>
 </div>
 </div>
 </div>
@@ -8582,7 +8577,7 @@ output
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [91]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">methods</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># remove [0:5] to see the very long list of all methods.</span>
@@ -8596,21 +8591,86 @@ output
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[91]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[72]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>[('simplemethod', 'imaginaryendpoint', 'imaginarymidpoint'),
- ('CML v4.8 2016 no LT',
+ ('ecoinvent-3.11',
+  'CML v4.8 2016 no LT',
   'acidification no LT',
   'acidification (incl. fate, average Europe total, A&amp;B) no LT'),
- ('CML v4.8 2016 no LT',
+ ('ecoinvent-3.11',
+  'CML v4.8 2016 no LT',
   'climate change no LT',
   'global warming potential (GWP100) no LT'),
- ('CML v4.8 2016 no LT',
+ ('ecoinvent-3.11',
+  'CML v4.8 2016 no LT',
   'ecotoxicity: freshwater no LT',
   'freshwater aquatic ecotoxicity (FAETP inf) no LT'),
- ('CML v4.8 2016 no LT',
+ ('ecoinvent-3.11',
+  'CML v4.8 2016 no LT',
   'ecotoxicity: marine no LT',
   'marine aquatic ecotoxicity (MAETP inf) no LT')]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>See also the cheatsheet <a href="https://docs.brightway.dev/en/latest/content/cheatsheet/ia.html#how-do-i-search-for-an-impact-category-using-list-comprehensions">here</a> to use methods.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [95]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># More convenient, search the IPCC method, cf cheatsheet linked above</span>
+<span class="p">[</span><span class="n">method</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">bd</span><span class="o">.</span><span class="n">methods</span> <span class="k">if</span> <span class="s1">'IPCC 2021'</span> <span class="ow">in</span> <span class="n">method</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">'fossil'</span> <span class="ow">in</span> <span class="n">method</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[95]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>[('ecoinvent-3.11',
+  'IPCC 2021 no LT',
+  'climate change: fossil no LT',
+  'global warming potential (GWP100) no LT'),
+ ('ecoinvent-3.11',
+  'IPCC 2021 no LT',
+  'climate change: fossil emissions (excl. aircraft emissions) no LT',
+  'global warming potential (GWP100) no LT'),
+ ('ecoinvent-3.11',
+  'IPCC 2021 no LT',
+  'climate change: fossil (excl. biogenic CO2, incl. SLCFs) no LT',
+  'global warming potential (GWP100) no LT'),
+ ('ecoinvent-3.11',
+  'IPCC 2021',
+  'climate change: fossil',
+  'global warming potential (GWP100)'),
+ ('ecoinvent-3.11',
+  'IPCC 2021',
+  'climate change: fossil emissions (excl. aircraft emissions)',
+  'global warming potential (GWP100)'),
+ ('ecoinvent-3.11',
+  'IPCC 2021',
+  'climate change: fossil (excl. biogenic CO2, incl. SLCFs)',
+  'global warming potential (GWP100)')]</pre>
 </div>
 </div>
 </div>
@@ -8623,9 +8683,9 @@ output
 <div class="jp-InputPrompt jp-InputArea-prompt">In [92]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># First select a method from the list (use 'list(methods)' to see all of them)</span>
-<span class="n">mymethod</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'IPCC 2013'</span><span class="p">,</span> <span class="s1">'climate change'</span><span class="p">,</span> <span class="s1">'global warming potential (GWP100)'</span><span class="p">)</span>
-<span class="n">mymethod</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># First select a method</span>
+<span class="n">mymethod</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'ecoinvent-3.11'</span><span class="p">,</span> <span class="s1">'IPCC 2021'</span><span class="p">,</span> <span class="s1">'climate change: fossil'</span><span class="p">,</span> <span class="s1">'global warming potential (GWP100)'</span><span class="p">)</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="n">mymethod</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -8638,44 +8698,38 @@ output
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[92]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>('IPCC 2013', 'climate change', 'global warming potential (GWP100)')</pre>
+<pre>{'unit': 'kg CO2-Eq',
+ 'filepath': '/Users/massimo/Library/Application Support/EcoinventInterface/cache/ecoinvent 3.11_LCIA_implementation/LCIA Implementation 3.11.xlsx',
+ 'ecoinvent_version': '3.11',
+ 'database': 'ecoinvent-3.11-biosphere',
+ 'abbreviation': 'ecoinvent-311icg.c9b310fc5e7ade1a82e83a4bab866e14',
+ 'num_cfs': 171,
+ 'geocollections': ['world']}</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [97]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [93]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent 3.9.1 conseq"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'ce40dd006e462e720eb669efbc31dd59'</span><span class="p">)</span>
-<span class="n">myact</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">mycode</span> <span class="o">=</span> <span class="s1">'4b61f97a9b942ba05720a1cea09eacc9'</span>
+<span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"ecoinvent-3.11-consequential"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mycode</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[97]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>'market for electricity, low voltage' (kilowatt hour, DK, None)</pre>
-</div>
-</div>
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [102]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [94]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">functional_unit</span> <span class="o">=</span> <span class="p">{</span><span class="n">myact</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
@@ -8695,39 +8749,8 @@ output
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.04779408709945726
+<pre>0.01653361551510372
 </pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [103]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">methods</span><span class="p">[</span><span class="n">mymethod</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[103]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'description': '',
- 'filename': 'LCIA_Implementation_3.9.xlsx',
- 'unit': 'kg CO2-Eq',
- 'abbreviation': 'ipcc-2013cg.c44286db43e989e224357edf263706ce',
- 'num_cfs': 207,
- 'geocollections': ['world']}</pre>
 </div>
 </div>
 </div>
@@ -8739,7 +8762,7 @@ output
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Exercise-(at-home)">Exercise (at home)<a class="anchor-link" href="#Exercise-(at-home)">¶</a></h1><p>Link the emissions of your previously defined foreground system to the biosphere3 database, and link some of the ecoinvent database activities to your foreground system. Run the calculations and get a carbon footprint with the ILCD climate change method.</p>
+<h1 id="Exercise-(at-home)">Exercise (at home)<a class="anchor-link" href="#Exercise-(at-home)">¶</a></h1><p>Link the emissions of your previously defined foreground system to the biosphere database, and link some of the ecoinvent database activities to your foreground system. Run the calculations and get a carbon footprint with the ILCD climate change method.</p>
 </div>
 </div>
 </div>
