@@ -7312,6 +7312,7 @@ a.anchor-link {
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -7527,18 +7528,20 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Brightway2.5 has a series of options for data import and export that you are invited to read about and try, they are on the official website and notebook.</p>
-<p>However, you can also developed your own importer, that fits with your workflow. For example, the file <code>lci_to_bw2.py</code> includes a code to convert a properly formatted csv file into a Brightway2.5 database dict. You need to install the Python Data Analysis Library <a href="https://pandas.pydata.org/">pandas</a> to make it work (within your virtual environment, run <code>conda install pandas</code> or <code>pip install pandas</code> if you are not using conda).</p>
+<p>Brightway2.5 has a series of options for data import and export that you are invited to read about and try, they are on the <a href="https://docs.brightway.dev/en/latest/content/examples/import.html">official website and notebooks</a>.</p>
+<p>However, you can also developed your own importer, that fits with your workflow. For example, the file <code>lci_to_bw2.py</code> includes a code to convert a properly formatted csv file into a Brightway2.5 database dict. You need the Python Data Analysis Library <a href="https://pandas.pydata.org/">pandas</a> to make it work (if you need to install it: within your virtual environment, run <code>conda install pandas</code> or <code>pip install pandas</code>).</p>
 <p>How does this importer work?</p>
 <ol>
 <li>Prepare your inventory in MS Excel using the template. See the example file <em>test_db_excel_w_ecoinvent.xlsx</em></li>
 <li>Save the relevant MS Excel sheet as .csv file, see the example file <em>test_db_excel_w_ecoinvent.csv</em></li>
 <li>Import the module in your script with the command <code>from lci_to_bw2 import *</code></li>
 <li>Import the .csv file as a dataframe with the pandas function <code>.read_csv()</code>. Clean it up for unnecessary columns.</li>
-<li>Convert the dataframe into a dict using the function <code>lci_to_bw2()</code></li>
-<li>Save the dict as a Brightway2.5 database in the usual way i.e. using Brightway's <code>Database()</code>and <code>.write()</code> functions.</li>
+<li>Convert the dataframe into a dictionary using the function <code>lci_to_bw2()</code></li>
+<li>Save the python dictionary as a Brightway2.5 database in the usual way i.e. using Brightway's <code>Database()</code>and <code>.write()</code> functions.</li>
 </ol>
 <p><strong>NOTE:</strong> this importer contains no automated tests so you need to make sure manually that the excel and csv files are in good order.</p>
+<p>More information abuot this LCI data template (including a schema) and importer can be found in a dedicated <a href="https://zenodo.org/records/10843472">open Zenodo repository</a> of the <a href="https://alignedproject.eu/">ALIGNED project</a>.
+In particular the document <em>Explainer to understanding the ALIGNED LCI data template</em> provides information that is useful also to undersand brightway strutures and the combined use of database and code ids as composite unique identifier in brightway.</p>
 <p>See an example below.</p>
 </div>
 </div>
@@ -7548,7 +7551,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import brightway2.5 packages</span>
@@ -7562,12 +7565,56 @@ a.anchor-link {
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>Databases dictionary with 4 object(s):
+	ecoinvent-3.11-biosphere
+	ecoinvent-3.11-consequential
+	testbiosphere
+	testdb</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">mydb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'test_db_excel_w_ecoinvent.csv'</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">","</span><span class="p">)</span> <span class="c1"># using csv file avoids encoding problem</span>
@@ -7582,7 +7629,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7663,7 +7710,7 @@ a.anchor-link {
 <td>Electricity production</td>
 <td>﻿kilowatt hour</td>
 <td>process</td>
-<td>biosphere3</td>
+<td>ecoinvent-3.11-biosphere</td>
 <td>349b29d1-3e58-4c66-98b9-9d1a076efd2e</td>
 <td>1.0</td>
 <td>kilogram</td>
@@ -7722,7 +7769,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># clean up a bit</span>
@@ -7740,7 +7787,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7818,7 +7865,7 @@ a.anchor-link {
 <td>Electricity production</td>
 <td>﻿kilowatt hour</td>
 <td>process</td>
-<td>biosphere3</td>
+<td>ecoinvent-3.11-biosphere</td>
 <td>349b29d1-3e58-4c66-98b9-9d1a076efd2e</td>
 <td>1.0</td>
 <td>kilogram</td>
@@ -7874,7 +7921,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create a dict that can be written as database</span>
@@ -7890,7 +7937,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{('exldb', 'Electricity production'): {'name': 'Electricity production',
   'unit': '\ufeffkilowatt hour',
@@ -7908,7 +7955,8 @@ a.anchor-link {
     'loc': 1.0,
     'scale': 1.01,
     'negative': False},
-   {'input': ('biosphere3', '349b29d1-3e58-4c66-98b9-9d1a076efd2e'),
+   {'input': ('ecoinvent-3.11-biosphere',
+     '349b29d1-3e58-4c66-98b9-9d1a076efd2e'),
     'amount': 1.0,
     'unit': 'kilogram',
     'type': 'biosphere',
@@ -7932,12 +7980,14 @@ a.anchor-link {
     'unit': 'kilogram',
     'type': 'production',
     'uncertainty type': 0},
-   {'input': ('ecoinvent 3.9.1 conseq', 'cea1e434115aa84cbfd7dc3086b61e80'),
+   {'input': ('ecoinvent-3.11-consequential',
+     '5e00f9695a7ce345a4a17c517fd1ea62'),
     'amount': 100.0,
     'unit': 'kilogram',
     'type': 'technosphere',
     'uncertainty type': 0},
-   {'input': ('biosphere3', '349b29d1-3e58-4c66-98b9-9d1a076efd2e'),
+   {'input': ('ecoinvent-3.11-biosphere',
+     '349b29d1-3e58-4c66-98b9-9d1a076efd2e'),
     'amount': 10.0,
     'unit': 'kilogram',
     'type': 'biosphere',
@@ -7962,37 +8012,6 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s1">'advlca25'</span><span class="p">)</span> <span class="c1"># Find a project where there is ecoinvent 3.6 conseq</span>
-<span class="n">bd</span><span class="o">.</span><span class="n">databases</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Databases dictionary with 4 object(s):
-	biosphere3
-	ecoinvent 3.9.1 conseq
-	testbiosphere
-	testdb</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -8003,9 +8022,11 @@ a.anchor-link {
 <p>Time to write the data on a database.</p>
 <p>Important:</p>
 <ul>
-<li><p>The database <strong>name should be the same</strong> as in the excel file...</p>
+<li><p>The <strong>database names should be the same</strong> as in the excel file...</p>
 </li>
 <li><p>make sure you <strong>shut down</strong> all other notebooks using <strong>the same bw project</strong> before you run this. Only one user at the time can write on a database. Otherwise you'll get a "Database locked" error.</p>
+</li>
+<li><p>give a look at the .csv file using a text editor before importing (often there are mistakes...)</p>
 </li>
 </ul>
 </div>
@@ -8016,11 +8037,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">t_db</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s1">'exldb'</span><span class="p">)</span> <span class="c1"># it works because the database name in the excel file is the same</span>
-<span class="c1"># shut down all other notebooks using the same project</span>
 <span class="n">t_db</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bw2_db</span><span class="p">)</span>
 <span class="c1"># Error: "Not able to determine geocollections for all datasets. This database is not ready for regionalization." </span>
 <span class="c1"># This is because the "activity" data don't have 'location' key-value pair, but it is fine, you can add it or not.</span>
@@ -8036,20 +8056,20 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Not able to determine geocollections for all datasets. This database is not ready for regionalization.
+<pre>11:23:21 [<span class="ansi-yellow-intense-fg ansi-bold">warning  </span>] <span class="ansi-bold">Not able to determine geocollections for all datasets. This database is not ready for regionalization.</span>
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|███████████████████████████████████████████| 4/4 [00:00&lt;00:00, 2514.19it/s]</pre>
+<pre>100%|██████████████████████████████████████████| 4/4 [00:00&lt;00:00, 11898.73it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vacuuming database 
+<pre>11:23:21 [<span class="ansi-green-intense-fg ansi-bold">info     </span>] <span class="ansi-bold">Vacuuming database            </span>
 </pre>
 </div>
 </div>
@@ -8067,10 +8087,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span> <span class="c1"># It worked</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">databases</span> <span class="c1"># It worked, exldb is there</span>
 </pre></div>
 </div>
 </div>
@@ -8081,11 +8101,11 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[34]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Databases dictionary with 5 object(s):
-	biosphere3
-	ecoinvent 3.9.1 conseq
+	ecoinvent-3.11-biosphere
+	ecoinvent-3.11-consequential
 	exldb
 	testbiosphere
 	testdb</pre>
@@ -8109,10 +8129,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="p">)</span> <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">t_db</span><span class="p">]</span>  <span class="c1"># check more stuff </span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">t_db</span><span class="p">]</span>  <span class="c1"># check more stuff </span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'---------'</span><span class="p">)</span>
 <span class="p">[[</span><span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span> <span class="k">for</span> <span class="n">exc</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">exchanges</span><span class="p">())]</span><span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">t_db</span><span class="p">]</span>  <span class="c1"># check more stuff </span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'---------'</span><span class="p">)</span>
@@ -8129,20 +8149,20 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>'Electricity production' (﻿kilowatt hour, None, None)
-'Crude oil' (kilogram, None, None)
-'Sulphur dioxide' (kilogram, None, None)
-'Fuel production' (kilogram, None, None)
+<pre>'Sulphur dioxide' (kilogram, None, None) 134965159210684418
+'Crude oil' (kilogram, None, None) 134965159210684419
+'Electricity production' (﻿kilowatt hour, None, None) 134965159210684416
+'Fuel production' (kilogram, None, None) 134965159210684417
 ---------
-'Electricity production' (﻿kilowatt hour, None, None) Exchange: 10.0 ﻿kilowatt hour 'Electricity production' (﻿kilowatt hour, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
-'Electricity production' (﻿kilowatt hour, None, None) Exchange: 2.0 kilogram 'Fuel production' (kilogram, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
-'Electricity production' (﻿kilowatt hour, None, None) Exchange: 1.0 kilogram 'Carbon dioxide, fossil' (kilogram, None, ('air',)) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
-'Electricity production' (﻿kilowatt hour, None, None) Exchange: 0.1 kilogram 'Sulphur dioxide' (kilogram, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
 'Fuel production' (kilogram, None, None) Exchange: 100.0 kilogram 'Fuel production' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
 'Fuel production' (kilogram, None, None) Exchange: 100.0 kilogram 'diesel production, low-sulfur' (kilogram, CH, None) to 'Fuel production' (kilogram, None, None)&gt;
 'Fuel production' (kilogram, None, None) Exchange: 10.0 kilogram 'Carbon dioxide, fossil' (kilogram, None, ('air',)) to 'Fuel production' (kilogram, None, None)&gt;
 'Fuel production' (kilogram, None, None) Exchange: 2.0 kilogram 'Sulphur dioxide' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
 'Fuel production' (kilogram, None, None) Exchange: -50.0 kilogram 'Crude oil' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
+'Electricity production' (﻿kilowatt hour, None, None) Exchange: 10.0 ﻿kilowatt hour 'Electricity production' (﻿kilowatt hour, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
+'Electricity production' (﻿kilowatt hour, None, None) Exchange: 2.0 kilogram 'Fuel production' (kilogram, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
+'Electricity production' (﻿kilowatt hour, None, None) Exchange: 1.0 kilogram 'Carbon dioxide, fossil' (kilogram, None, ('air',)) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
+'Electricity production' (﻿kilowatt hour, None, None) Exchange: 0.1 kilogram 'Sulphur dioxide' (kilogram, None, None) to 'Electricity production' (﻿kilowatt hour, None, None)&gt;
 ---------
 {'uncertainty type': 0}
 {'uncertainty type': 0}
@@ -8157,24 +8177,43 @@ a.anchor-link {
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[35]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[[None, None, None, None, None], [], [], [None, None, None, None]]</pre>
+<pre>[[], [None, None, None, None, None], [], [None, None, None, None]]</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">myact</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">"exldb"</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Fuel production'</span><span class="p">)</span>
 <span class="n">exchanges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">myact</span><span class="o">.</span><span class="n">exchanges</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">exc</span> <span class="ow">in</span> <span class="n">exchanges</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Exchange: 100.0 kilogram 'Fuel production' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
+Exchange: 100.0 kilogram 'diesel production, low-sulfur' (kilogram, CH, None) to 'Fuel production' (kilogram, None, None)&gt;
+Exchange: 10.0 kilogram 'Carbon dioxide, fossil' (kilogram, None, ('air',)) to 'Fuel production' (kilogram, None, None)&gt;
+Exchange: 2.0 kilogram 'Sulphur dioxide' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
+Exchange: -50.0 kilogram 'Crude oil' (kilogram, None, None) to 'Fuel production' (kilogram, None, None)&gt;
+</pre>
 </div>
 </div>
 </div>
@@ -8195,10 +8234,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">mymethod</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'IPCC 2013'</span><span class="p">,</span> <span class="s1">'climate change'</span><span class="p">,</span> <span class="s1">'global warming potential (GWP100)'</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">mymethod</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'ecoinvent-3.11'</span><span class="p">,</span> <span class="s1">'IPCC 2021'</span><span class="p">,</span> <span class="s1">'climate change: fossil'</span><span class="p">,</span> <span class="s1">'global warming potential (GWP100)'</span><span class="p">)</span>
 <span class="n">el</span> <span class="o">=</span> <span class="n">t_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Electricity production"</span><span class="p">)</span>
 <span class="n">functional_unit</span> <span class="o">=</span> <span class="p">{</span><span class="n">el</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
 <span class="n">lca</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">LCA</span><span class="p">(</span><span class="n">functional_unit</span><span class="p">,</span> <span class="n">mymethod</span><span class="p">)</span>
@@ -8217,7 +8256,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>324.1823668256106
+<pre>298.24814655482277
 </pre>
 </div>
 </div>
@@ -8241,7 +8280,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Group-exercise">Group exercise<a class="anchor-link" href="#Group-exercise">¶</a></h1><h3 id="(This-is-for-the-portfolio-you-don't-need-to-do-it-now,-we'll-start-it-during-the-online-lecture)">(This is for the portfolio you don't need to do it now, we'll start it during the online lecture)<a class="anchor-link" href="#(This-is-for-the-portfolio-you-don't-need-to-do-it-now,-we'll-start-it-during-the-online-lecture)">¶</a></h3><p>Prepare your own product system in excel, linked to biosphere3 and ecoinvent, and import it. Run calculations to see if it works as expected. Send all the code and data to another group and see if they can reproduce your results, in that case, the exercise will be a success. Get feedback from other group on your code and what difficulties they had in reading and running it.</p>
+<h1 id="Group-exercise">Group exercise<a class="anchor-link" href="#Group-exercise">¶</a></h1><p>Prepare your own product system in excel, linked to biosphere and ecoinvent, and import it. Run calculations to see if it works as expected. Send all the code and data to another group and see if they can reproduce your results, in that case, the exercise will be a success. Get feedback from other group on your code and what difficulties they had in reading and running it.</p>
 </div>
 </div>
 </div>

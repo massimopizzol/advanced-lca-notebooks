@@ -1,11 +1,11 @@
 ﻿Activity database,Activity code,Activity name,Activity unit,Activity type,Exchange database,Exchange input,Exchange amount,Exchange unit,Exchange type,Exchange uncertainty type,Exchange loc,Exchange scale,Exchange negative,Notes
 exldb,Electricity production,Electricity production,﻿kilowatt hour,process,exldb,Electricity production,10,kilowatt hour,production,,,,,
 exldb,Electricity production,Electricity production,﻿kilowatt hour,process,exldb,Fuel production,2,kilogram,technosphere,2,1,1.01,False,
-exldb,Electricity production,Electricity production,﻿kilowatt hour,process,biosphere3,349b29d1-3e58-4c66-98b9-9d1a076efd2e,1,kilogram,biosphere,2,1,1.01,False,Carbon dioxide
+exldb,Electricity production,Electricity production,﻿kilowatt hour,process,ecoinvent-3.11-biosphere,349b29d1-3e58-4c66-98b9-9d1a076efd2e,1,kilogram,biosphere,2,1,1.01,False,Carbon dioxide
 exldb,Electricity production,Electricity production,﻿kilowatt hour,process,exldb,Sulphur dioxide,0.1,kilogram,biosphere,0,2,2,True,
 exldb,Fuel production,Fuel production,kilogram,process,exldb,Fuel production,100,kilogram,production,,,,,
-exldb,Fuel production,Fuel production,kilogram,process,ecoinvent 3.9.1 conseq,cea1e434115aa84cbfd7dc3086b61e80,100,kilogram,technosphere,,,,,"﻿'diesel production, low-sulfur' (kilogram, Europe without Switzerland, None)"
-exldb,Fuel production,Fuel production,kilogram,process,biosphere3,349b29d1-3e58-4c66-98b9-9d1a076efd2e,10,kilogram,biosphere,,,,,
+exldb,Fuel production,Fuel production,kilogram,process,ecoinvent-3.11-consequential,5e00f9695a7ce345a4a17c517fd1ea62,100,kilogram,technosphere,,,,,"diesel production, low-sulfur' (kilogram, CH, None)"
+exldb,Fuel production,Fuel production,kilogram,process,ecoinvent-3.11-biosphere,349b29d1-3e58-4c66-98b9-9d1a076efd2e,10,kilogram,biosphere,,,,,
 exldb,Fuel production,Fuel production,kilogram,process,exldb,Sulphur dioxide,2,kilogram,biosphere,,,,,
 exldb,Fuel production,Fuel production,kilogram,process,exldb,Crude oil,-50,kilogram,biosphere,,,,,
 exldb,Sulphur dioxide,Sulphur dioxide,kilogram,biosphere,,,,,,,,,,
